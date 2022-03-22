@@ -12,4 +12,9 @@ class listaRobots:
             while actual.siguiente:
                 actual = actual.siguiente
             actual.siguiente = nodoRobot(robot=Robot)
-            
+
+    def recorrer(self):
+        actual = self.cabeza
+        while actual != None:
+            print("name="+actual.robot.nombre,"tipo="+actual.robot.Tipo,"->")
+            actual=actual.siguiente

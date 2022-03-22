@@ -21,6 +21,9 @@ class cuadritoUniMilitar(Cuadrito):
         Cuadrito.__init__(self, "Militar", x, y)
         self.capaCombate = capaCombate
 
+    def setCapacidad(self, capacidad):
+        self.capaCombate = capacidad
+
 class cuadritoUniCivil(Cuadrito):
     def __init__(self, x, y):
         Cuadrito.__init__(self, "Civil", x, y)
