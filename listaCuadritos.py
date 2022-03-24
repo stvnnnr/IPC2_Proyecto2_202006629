@@ -87,4 +87,133 @@ class listaCuadritos:
             actual = actual.siguiente
         for j in range(1, int(fila)):
             actual = actual.abajo
-        actual.Cuadrito = cuadritoUniMilitar(i,j,poder)
+        actual.Cuadrito = cuadritoUniMilitar(fila,columna,poder)
+    
+    def recorrer(self):
+        actual = self.cabeza
+        while actual.abajo != None:
+            while actual.siguiente != None:
+                print(actual.Cuadrito.Tipo,"Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
+                actual = actual.siguiente
+            print(actual.Cuadrito.Tipo,"Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
+            while actual.anterior != None:
+                actual = actual.anterior
+            actual = actual.abajo
+        while actual.siguiente != None:
+            print(actual.Cuadrito.Tipo,"Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
+            actual = actual.siguiente
+        print(actual.Cuadrito.Tipo,"Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
+
+    def menuRescates(self, filas, columnas):
+        actual = self.cabeza
+        print("")
+        print("")
+        print("")
+        print("|                          MENU RESCATES                          |")
+        n=1
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if actual.Cuadrito.Tipo == "Civil":
+                    print("  ",n,".","Unidad Civil","Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
+                    n = n+1
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
+        print("   0 . Volver .")
+        return n
+
+    def menuRecursos(self, filas, columnas):
+        actual = self.cabeza
+        print("")
+        print("")
+        print("")
+        print("|                          MENU RECURSOS                          |")
+        n=1
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if actual.Cuadrito.Tipo == "Recurso":
+                    print("  ",n,".",actual.Cuadrito.Tipo,"Fila:",actual.Cuadrito.x,"- Columna:",actual.Cuadrito.y,".                     ")
+                    n = n+1
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
+        print("   0 . Volver .")
+
+##################vas aqui hijo de puta, haciendo menu con contador para rescates
+    def mantenerMenuRescate(self, filas, columnas):
+        correcto = False
+        if self.cabeza == None:
+            print("No hay ciudades para mostrar")
+        else:
+            while (not correcto):
+                n = self.menuRescates(filas, columnas)
+                select = int(input("selecciona alguna opción:"))
+                print("\n")
+                for s in range(n):
+                    if select == 0:
+                        correcto = True
+                        break
+                    elif select == s:
+                        x = self.devolverXRescate(s,filas, columnas)
+                        y = self.devolverYRescate(s,filas, columnas)
+                        ############### vas aqui qlo
+                        break
+                if select != s and select !=0:
+                    print("esa opcion no existe")
+
+    def devolverXRescate(self,n, filas, columnas):
+        actual = self.cabeza
+        cont = 0
+        if n == 1:
+            for i in range((int(filas))):
+                for j in range(int(columnas)):
+                    if actual.Cuadrito.Tipo == "Civil":
+                        return actual.Cuadrito.x
+                    if actual.siguiente !=None:
+                        actual = actual.siguiente
+                while actual.anterior:
+                    actual = actual.anterior
+                actual = actual.abajo
+
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if actual.Cuadrito.Tipo == "Civil":
+                    cont +=1
+                    if cont == n:
+                        return actual.Cuadrito.x
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
+
+    def devolverYRescate(self,n, filas, columnas):
+        actual = self.cabeza
+        cont = 0
+        if n == 1:
+            for i in range((int(filas))):
+                for j in range(int(columnas)):
+                    if actual.Cuadrito.Tipo == "Civil":
+                        return actual.Cuadrito.y
+                    if actual.siguiente !=None:
+                        actual = actual.siguiente
+                while actual.anterior:
+                    actual = actual.anterior
+                actual = actual.abajo
+
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if actual.Cuadrito.Tipo == "Civil":
+                    cont +=1
+                    if cont == n:
+                        return actual.Cuadrito.y
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
+

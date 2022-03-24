@@ -18,3 +18,26 @@ class listaRobots:
         while actual != None:
             print("name="+actual.robot.nombre,"tipo="+actual.robot.Tipo,"->")
             actual=actual.siguiente
+    
+    def buscar(self, name):
+        actual = self.cabeza
+        while actual != None:
+            if actual and actual.robot.nombre == name:
+                print(actual.robot.nombre)
+                return actual.robot.nombre
+            actual = actual.siguiente
+
+    def eliminar(self,carne):
+        actual=self.cabeza
+        anterior=None
+
+        while actual and actual.robot.nombre != carne:
+            anterior=actual
+            actual=actual.siguiente
+
+        if anterior is None:
+            self.cabeza = actual.siguiente
+            actual.siguiente = None
+        elif actual:
+            anterior.siguiente = actual.siguiente
+            actual.siguiente = None

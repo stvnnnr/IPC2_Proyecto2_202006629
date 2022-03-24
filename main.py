@@ -1,6 +1,5 @@
 import sys
 from os import startfile, system
-from turtle import pos, right
 from xml.dom import minidom
 from listaCuadritos import listaCuadritos
 from listaCiudades import listaCiudades
@@ -12,6 +11,7 @@ global listaCiudad
 listaCiudad = listaCiudades()
 global listaRob 
 listaRob = listaRobots()
+
 #estructura de mi menu principal
 def menuPrincipal():
     print("                                                                ")
@@ -37,20 +37,15 @@ def cargaarchivo():
         for ciudad in ciudades:
             nombreSucio = ciudad.getElementsByTagName("nombre")[0]
             nameCiudad = str(nombreSucio.childNodes[0].data)
-            #print(nameCiudad)
 
-            
             comprobar=listaCiudad.buscar(nameCiudad)
             if comprobar == nameCiudad:
-                print("entro")
                 listaCiudad.eliminar(nameCiudad)
 
             nam = ciudad.getElementsByTagName("nombre")
             for x in nam:
                 filas = int(x.getAttribute("filas"))
                 columnas = int(x.getAttribute("columnas"))
-            #print(filas)
-            #print(columnas)
             ciuUno = Ciudad(nameCiudad, filas, columnas)
 
             contenidoFila = ""
@@ -59,7 +54,6 @@ def cargaarchivo():
                 textoCrudo = p.childNodes[0].nodeValue
                 texto = textoCrudo.split("\"")[1]
                 contenidoFila = contenidoFila + str(texto)
-            #print(contenidoFila)
             z=0
             listaa = listaCuadritos(filas, columnas)
             for i in range(1,(int(filas)+1)):
@@ -68,41 +62,40 @@ def cargaarchivo():
                         a = cuadritoTransitable(i,j)
                         listaa.insertarCuadrito(a)
                         z = z+1
-                        #print("hay espacio")
                     elif contenidoFila[z] == "*":
                         a = cuadritoIntransitable(i,j)
                         listaa.insertarCuadrito(a)
                         z = z+1
-                        #print("Intransitable")
                     elif contenidoFila[z] == "E":
                         a = cuadritoEntrada(i,j)
                         listaa.insertarCuadrito(a)
                         z = z+1
-                        #print("Entrada")
                     elif contenidoFila[z] == "C":
                         a = cuadritoUniCivil(i,j)
                         listaa.insertarCuadrito(a)
                         z = z+1
-                        #print("Civil")
                     elif contenidoFila[z] == "R":
                         a = cuadritoRecurso(i,j)
                         listaa.insertarCuadrito(a)
                         z = z+1
-                        #print("Recurso")
-            ########################aca vas culero
             unis = ciudad.getElementsByTagName("unidadMilitar")
             for s in unis:
                 fila = int(s.getAttribute("fila"))
                 columna = int(s.getAttribute("columna"))
                 poder = int(s.childNodes[0].nodeValue)
+                #print(str(fila), str(columna), str(poder))
                 listaa.buscarPCo(fila, columna, poder)
+            #listaa.recorrer()
             ciuUno.setListaCua(listaa)
             listaCiudad.insertarCiudad(ciuUno)
-        
         for robo in robotos:
+            
             nombreSuciox = robo.getElementsByTagName("nombre")[0]
             nameRoboto = nombreSuciox.childNodes[0].data
-
+            compo=listaRob.buscar(nameRoboto)
+            if compo == nameRoboto:
+                listaRob.eliminar(nameRoboto)
+            
             nama = robo.getElementsByTagName("nombre")
             for d in nama:
                 tipo = (d.getAttribute("tipo"))
@@ -113,7 +106,6 @@ def cargaarchivo():
             elif tipo == "ChapinRescue":
                 ro = robotRescate(nameRoboto)
             listaRob.insertarRobot(ro)
-        # listaRob.recorrer()
         print("El archivo de: "+nombreFabrica+ " se cargo con exito ✓")
     # except:
     #     print("ocurrio un error, vuelve a intentarlo")
@@ -130,6 +122,7 @@ while True:
             cargaarchivo()
             print("")
         elif select == 2:
+            listaCiudad.mantenerMenuCiudad()
             print("")
         elif select == 0:
             print("------          Gracias por usar mi programa :3           ------")
