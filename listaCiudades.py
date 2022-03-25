@@ -1,3 +1,4 @@
+from selectors import SelectorKey
 import sys
 from nodoCiudad import nodoCiudad
 class listaCiudades:
@@ -93,8 +94,8 @@ class listaCiudades:
                 print("\n")
                 if select == 1:
                     self.buscarRescates(nombre)
-                    print("rescate")
                 elif select == 2:
+                    self.buscarRecurso(nombre)
                     print("extraccion")
                 elif select == 0:
                     print("volviendo...")
@@ -113,4 +114,14 @@ class listaCiudades:
                 columnas=actual.Ciudad.columnas
                 listaP = actual.Ciudad.getListaCua()
                 listaP.mantenerMenuRescate(filas, columnas)
+            actual = actual.siguiente
+
+    def buscarRecurso(self, nombre):
+        actual =  self.cabeza
+        while actual != None:
+            if actual and actual.Ciudad.nombre == nombre:
+                filas=actual.Ciudad.filas
+                columnas=actual.Ciudad.columnas
+                listaP = actual.Ciudad.getListaCua()
+                listaP.mantenerMenuRecurso(filas, columnas)
             actual = actual.siguiente

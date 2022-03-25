@@ -1,5 +1,6 @@
 from nodoCuadrito import nodoCuadrito
 from Cuadrito import Cuadrito, cuadritoUniMilitar
+from listaRobots import listaRobots
 
 class listaCuadritos:
     def __init__(self, filas, columnas):
@@ -8,6 +9,7 @@ class listaCuadritos:
         self.columnas = columnas
         self.contadorC = 0
         self.contadorF = 0
+        self.listaRobs = listaRobots
 
     def insertarCuadrito(self, Cuadrito):
         actual = self.cabeza
@@ -79,7 +81,9 @@ class listaCuadritos:
                     self.contadorC = 1
                     self.contadorF +=1
             # print(actual.Cuadrito.x, actual.Cuadrito.y)
-
+    
+    def setListaRob(self, listarob):
+        self.listaRobs = listarob
 
     def buscarPCo(self, fila, columna, poder):
         actual = self.cabeza
@@ -134,7 +138,7 @@ class listaCuadritos:
         for i in range((int(filas))):
             for j in range(int(columnas)):
                 if actual.Cuadrito.Tipo == "Recurso":
-                    print("  ",n,".",actual.Cuadrito.Tipo,"Fila:",actual.Cuadrito.x,"- Columna:",actual.Cuadrito.y,".                     ")
+                    print("  ",n,".","Unidad de Recursos","Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
                     n = n+1
                 if actual.siguiente !=None:
                     actual = actual.siguiente
@@ -142,6 +146,7 @@ class listaCuadritos:
                 actual = actual.anterior
             actual = actual.abajo
         print("   0 . Volver .")
+        return n
 
 ##################vas aqui hijo de puta, haciendo menu con contador para rescates
     def mantenerMenuRescate(self, filas, columnas):
@@ -158,9 +163,25 @@ class listaCuadritos:
                         correcto = True
                         break
                     elif select == s:
-                        x = self.devolverXRescate(s,filas, columnas)
-                        y = self.devolverYRescate(s,filas, columnas)
-                        ############### vas aqui qlo
+                        x = str(self.devolverXRescate(s,filas, columnas))
+                        y = str(self.devolverYRescate(s,filas, columnas))
+                        w = str(self.listaRobs.mantenerRobotoElegidoRescate())
+                        lol = False
+                        while (not lol):
+                            print("¿Ha elegido salvar la Unidad Civil localizada en: Fila:"+x+" - columna:"+y+" con el dron de rescate:"+w+"?")
+                            print("Si = 1")
+                            print("No = 2")
+                            select = int(input("selecciona alguna opción:"))
+                            if select == 1:
+                                print("Vamo a darle")
+                                lol = True
+                            elif select == 2:
+                                lol = True
+                                print("No")
+                                print("Volviendo....")
+                                break
+                            elif select != 1 and select !=2:
+                                print("esa opcion no existe")
                         break
                 if select != s and select !=0:
                     print("esa opcion no existe")
@@ -217,3 +238,92 @@ class listaCuadritos:
                 actual = actual.anterior
             actual = actual.abajo
 
+
+    def mantenerMenuRecurso(self, filas, columnas):
+        correcto = False
+        if self.cabeza == None:
+            print("No hay ciudades para mostrar")
+        else:
+            while (not correcto):
+                n = self.menuRecursos(filas, columnas)
+                select = int(input("selecciona alguna opción:"))
+                print("\n")
+                for s in range(n):
+                    if select == 0:
+                        correcto = True
+                        break
+                    elif select == s:
+                        x = str(self.devolverXRecurso(s,filas, columnas))
+                        y = str(self.devolverYRecurso(s,filas, columnas))
+                        w = str(self.listaRobs.mantenerRobotoElegidoPelea())
+                        lol = False
+                        while (not lol):
+                            print("¿Ha elegido salvar el Recurso localizado en: Fila:"+x+" - columna:"+y+" con el dron de Pelea:"+w+"?")
+                            print("Si = 1")
+                            print("No = 2")
+                            select = int(input("selecciona alguna opción:"))
+                            if select == 1:
+                                print("Vamo a darle")
+                                lol = True
+                            elif select == 2:
+                                lol = True
+                                print("No")
+                                print("Volviendo....")
+                                break
+                            elif select != 1 and select !=2:
+                                print("esa opcion no existe")
+                        break
+                if select != s and select !=0:
+                    print("esa opcion no existe")
+
+    def devolverXRecurso(self,n, filas, columnas):
+        actual = self.cabeza
+        cont = 0
+        if n == 1:
+            for i in range((int(filas))):
+                for j in range(int(columnas)):
+                    if actual.Cuadrito.Tipo == "Recurso":
+                        return actual.Cuadrito.x
+                    if actual.siguiente !=None:
+                        actual = actual.siguiente
+                while actual.anterior:
+                    actual = actual.anterior
+                actual = actual.abajo
+
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if actual.Cuadrito.Tipo == "Recurso":
+                    cont +=1
+                    if cont == n:
+                        return actual.Cuadrito.x
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
+
+    def devolverYRecurso(self,n, filas, columnas):
+        actual = self.cabeza
+        cont = 0
+        if n == 1:
+            for i in range((int(filas))):
+                for j in range(int(columnas)):
+                    if actual.Cuadrito.Tipo == "Recurso":
+                        return actual.Cuadrito.y
+                    if actual.siguiente !=None:
+                        actual = actual.siguiente
+                while actual.anterior:
+                    actual = actual.anterior
+                actual = actual.abajo
+
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if actual.Cuadrito.Tipo == "Recurso":
+                    cont +=1
+                    if cont == n:
+                        return actual.Cuadrito.y
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo

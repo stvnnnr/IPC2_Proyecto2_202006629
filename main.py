@@ -1,16 +1,17 @@
 import sys
 from os import startfile, system
 from xml.dom import minidom
+global listaRob
+global listaCiudad
 from listaCuadritos import listaCuadritos
 from listaCiudades import listaCiudades
 from listaRobots import listaRobots
+listaRob = listaRobots()
 from robot import robotPelea, robotRescate
 from Ciudad import Ciudad
 from Cuadrito import cuadritoEntrada, cuadritoIntransitable, cuadritoRecurso, cuadritoTransitable, cuadritoUniCivil
-global listaCiudad
 listaCiudad = listaCiudades()
-global listaRob 
-listaRob = listaRobots()
+
 
 #estructura de mi menu principal
 def menuPrincipal():
@@ -34,6 +35,25 @@ def cargaarchivo():
         #creo lista de pisos
         ciudades = raicita.getElementsByTagName("ciudad")
         robotos = raicita.getElementsByTagName("robot")
+
+        for robo in robotos:
+            nombreSuciox = robo.getElementsByTagName("nombre")[0]
+            nameRoboto = nombreSuciox.childNodes[0].data
+            compo=listaRob.buscar(nameRoboto)
+            if compo == nameRoboto:
+                listaRob.eliminar(nameRoboto)
+            
+            nama = robo.getElementsByTagName("nombre")
+            for d in nama:
+                tipo = (d.getAttribute("tipo"))
+                if d.getAttribute("capacidad"):
+                    capa = int(d.getAttribute("capacidad"))
+            if tipo == "ChapinFighter":
+                ro = robotPelea(nameRoboto, capa)
+            elif tipo == "ChapinRescue":
+                ro = robotRescate(nameRoboto)
+            listaRob.insertarRobot(ro)
+        
         for ciudad in ciudades:
             nombreSucio = ciudad.getElementsByTagName("nombre")[0]
             nameCiudad = str(nombreSucio.childNodes[0].data)
@@ -86,26 +106,10 @@ def cargaarchivo():
                 #print(str(fila), str(columna), str(poder))
                 listaa.buscarPCo(fila, columna, poder)
             #listaa.recorrer()
+            listaa.setListaRob(listaRob)
             ciuUno.setListaCua(listaa)
             listaCiudad.insertarCiudad(ciuUno)
-        for robo in robotos:
-            
-            nombreSuciox = robo.getElementsByTagName("nombre")[0]
-            nameRoboto = nombreSuciox.childNodes[0].data
-            compo=listaRob.buscar(nameRoboto)
-            if compo == nameRoboto:
-                listaRob.eliminar(nameRoboto)
-            
-            nama = robo.getElementsByTagName("nombre")
-            for d in nama:
-                tipo = (d.getAttribute("tipo"))
-                if d.getAttribute("capacidad"):
-                    capa = int(d.getAttribute("capacidad"))
-            if tipo == "ChapinFighter":
-                ro = robotPelea(nameRoboto, capa)
-            elif tipo == "ChapinRescue":
-                ro = robotRescate(nameRoboto)
-            listaRob.insertarRobot(ro)
+        
         print("El archivo de: "+nombreFabrica+ " se cargo con exito ✓")
     # except:
     #     print("ocurrio un error, vuelve a intentarlo")

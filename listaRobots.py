@@ -41,3 +41,78 @@ class listaRobots:
         elif actual:
             anterior.siguiente = actual.siguiente
             actual.siguiente = None
+    
+    def menuRobRescate(self):
+        actual = self.cabeza
+        print("")
+        print("")
+        print("")
+        print("|                          MENU DRONES                          |")
+        n=1
+        while actual != None:
+            if actual.robot.Tipo == "Rescate":
+                print("  ",n,".",actual.robot.nombre,".                     ")
+                n = n+1
+            actual=actual.siguiente
+        print("   0 . Volver .")
+
+    def mantenerRobotoElegidoRescate(self):
+        correcto = False
+        if self.cabeza == None:
+            print("No hay drones de rescate para mostrar")
+        else:
+            while (not correcto):
+                self.menuRobRescate()
+                actual = self.cabeza
+                select = int(input("Que dron quiere para su misión:"))
+                print("\n")
+                n = 1
+                while actual != None:
+                    if actual.robot.Tipo == "Rescate":
+                        if select == 0:
+                            correcto = True
+                            break
+                        elif select == n:
+                            return(actual.robot.nombre)
+                        n = n+1
+                    actual=actual.siguiente
+                if select != n and select !=0:
+                    print("esa opcion no existe")
+
+    def menuRobPelea(self):
+        actual = self.cabeza
+        print("")
+        print("")
+        print("")
+        print("|                          MENU DRONES                          |")
+        n=1
+        while actual != None:
+            if actual.robot.Tipo == "Pelea":
+                print("  ",n,".",actual.robot.nombre,".                     ")
+                n = n+1
+            actual=actual.siguiente
+        print("   0 . Volver .")
+
+
+    def mantenerRobotoElegidoPelea(self):
+        correcto = False
+        if self.cabeza == None:
+            print("No hay drones de rescate para mostrar")
+        else:
+            while (not correcto):
+                self.menuRobPelea()
+                actual = self.cabeza
+                select = int(input("Que dron quiere para su misión:"))
+                print("\n")
+                n = 1
+                while actual != None:
+                    if actual.robot.Tipo == "Pelea":
+                        if select == 0:
+                            correcto = True
+                            break
+                        elif select == n:
+                            return(actual.robot.nombre)
+                        n = n+1
+                    actual=actual.siguiente
+                if select != n and select !=0:
+                    print("esa opcion no existe")
