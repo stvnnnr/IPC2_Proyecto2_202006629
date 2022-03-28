@@ -93,7 +93,6 @@ class listaRobots:
             actual=actual.siguiente
         print("   0 . Volver .")
 
-
     def mantenerRobotoElegidoPelea(self):
         correcto = False
         if self.cabeza == None:

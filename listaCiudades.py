@@ -1,5 +1,5 @@
-from selectors import SelectorKey
 import sys
+from os import startfile, system
 from nodoCiudad import nodoCiudad
 class listaCiudades:
     def __init__(self):
@@ -74,7 +74,6 @@ class listaCiudades:
                 if select != n and select !=0:
                     print("esa opcion no existe")
 
-
     def menuCiudadElegida(self, nombre):
         actual = self.cabeza
         while actual != None:
@@ -94,6 +93,7 @@ class listaCiudades:
                 print("\n")
                 if select == 1:
                     self.buscarRescates(nombre)
+                    
                 elif select == 2:
                     self.buscarRecurso(nombre)
                     print("extraccion")
@@ -113,8 +113,11 @@ class listaCiudades:
                 filas=actual.Ciudad.filas
                 columnas=actual.Ciudad.columnas
                 listaP = actual.Ciudad.getListaCua()
-                listaP.mantenerMenuRescate(filas, columnas)
+                #self.graficar(nombre,filas, columnas)
+                if listaP.mantenerMenuRescate(filas, columnas):
+                    self.graficar(nombre,filas,columnas)
             actual = actual.siguiente
+
 
     def buscarRecurso(self, nombre):
         actual =  self.cabeza
@@ -124,4 +127,52 @@ class listaCiudades:
                 columnas=actual.Ciudad.columnas
                 listaP = actual.Ciudad.getListaCua()
                 listaP.mantenerMenuRecurso(filas, columnas)
+            actual = actual.siguiente
+
+
+    def graficar(self, nombre, filas, columnas):
+        actual = self.cabeza
+        while actual != None:
+            try:
+                if actual and actual.Ciudad.nombre == nombre:
+                    listaConPatron = actual.Ciudad.getListaCua()
+                    textoConComas = listaConPatron.pintar(filas, columnas)
+                    textoSinComas = textoConComas.split(",")
+                    z=0#auxiliar
+                    Archivo = open('patron.dot', 'w')
+                    cabeza = '''digraph structs {
+                                node [shape=box]
+                                struct3 [label=<
+                                    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="1" CELLPADDING="20">
+                                    '''
+                    Archivo.write(cabeza)
+                    for fila in range(int(filas)):
+                        inicioFila = "<TR>"
+                        Archivo.write(inicioFila)
+                        for columna in range(int(columnas)):
+                            Archivo.write(textoSinComas[z])
+                            z=z+1
+                        finFila = "</TR>"
+                        Archivo.write(finFila)
+                    finDot = '''</TABLE>>];'''
+                    Archivo.write(finDot)
+                    cabezaDos = '''struct4 [label=<
+                                    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="15" CELLPADDING="10">
+                                    <TR>
+                                    <TD COLSPAN="20">
+                                    '''
+                    Archivo.write(cabezaDos)
+                    Archivo.write(nombre)
+                    luegoDelName = '''</TD>
+                                </TR>'''
+                    Archivo.write(luegoDelName)
+                    ############aca irian los otros datos
+                    finDotDos = '''</TABLE>>];}'''
+                    Archivo.write(finDotDos)
+                    Archivo.close()
+                    system('dot -Tpng patron.dot -o patron.png')
+                    startfile('patron.png')
+            except:
+                print("ocurrio un error, vuelve a intentarlo")
+                print("El error fue:", sys.exc_info()[0])
             actual = actual.siguiente

@@ -3,9 +3,9 @@
     <listaCiudades>
         <ciudad>
             <nombre filas="15" columnas ="20">CiudadGotica</nombre>
-            <fila numero="1">"********************"</fila>
+            <fila numero="1">"***************C****"</fila>
             <fila numero="2">"*** **             *"</fila>
-            <fila numero="3">"*** *****E*****C****"</fila>
+            <fila numero="3">"*** *****E**********"</fila>
             <fila numero="4">"*** ***** ***** ***R"</fila>
             <fila numero="5">"E                   "</fila>
             <fila numero="6">"*** ** ** ** ** ****"</fila>

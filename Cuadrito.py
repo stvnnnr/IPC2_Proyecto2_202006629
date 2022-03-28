@@ -3,6 +3,10 @@ class Cuadrito(object):
         self.Tipo = Tipo
         self.x = x
         self.y = y
+        self.indicador = 0
+    
+    def setIndicador(self,x):
+        self.indicador = x
 
 class cuadritoEntrada(Cuadrito):
     def __init__(self, x, y):

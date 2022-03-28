@@ -25,7 +25,7 @@ def menuPrincipal():
     print("----------------------------------------------------------------")
 
 def cargaarchivo():
-    # try:
+    try:
         global listaCiudad
         global listaRob
         documentt = minidom.parse(str(input("Ingrese la ruta de su archivo: --> ")))
@@ -111,9 +111,9 @@ def cargaarchivo():
             listaCiudad.insertarCiudad(ciuUno)
         
         print("El archivo de: "+nombreFabrica+ " se cargo con exito ✓")
-    # except:
-    #     print("ocurrio un error, vuelve a intentarlo")
-    #     print("El error fue:", sys.exc_info()[0])
+    except:
+        print("ocurrio un error, vuelve a intentarlo")
+        print("El error fue:", sys.exc_info()[0])
 
 
 # Este while me ayuda a mantener activo el menu siempre
@@ -150,7 +150,7 @@ while True:
 #         a = cuadritoEntrada(i,j)
 #         listaa.insertarCuadrito(a)
         # print(z)
-        # z+=1
+        # z+=1>>
 
 # li = listaa.mostrarMatriz()
 # print(li)
