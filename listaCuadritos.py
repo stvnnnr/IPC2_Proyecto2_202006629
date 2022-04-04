@@ -200,7 +200,7 @@ class listaCuadritos:
                                 self.caminoRescate(filas, columnas,x,y)
                                 print("Vamo a darle")
                                 lol = True
-                                return True
+                                return (x,y,w)
                             elif select == 2:
                                 lol = True
                                 print("No")
@@ -265,7 +265,7 @@ class listaCuadritos:
             actual = actual.abajo
 
     def caminoRescate(self,filas, columnas, x ,y):
-        self.cambiarIndicadores(x,y,filas, columnas)
+        self.cambiarIndicadoresRescate(x,y,filas, columnas)
         xEntrada = self.buscarEntradaX(filas, columnas)
         yEntrada = self.buscarEntradaY(filas, columnas)
         actual = self.cabeza
@@ -291,7 +291,7 @@ class listaCuadritos:
                 identificador = "-y"
         elif actual.Cuadrito.x >x:
             if actual.Cuadrito.y < y:
-                a = self.recorridoDos(xEntrada,yEntrada, filas, columnas)
+                a = self.recorridoUno(xEntrada,yEntrada, filas, columnas)
                 print(a)
             elif actual.Cuadrito.y > y:
                 a = self.recorridoUno(xEntrada,yEntrada, filas, columnas)
@@ -322,7 +322,7 @@ class listaCuadritos:
                 actual = actual.anterior
             actual = actual.abajo
 
-    def cambiarIndicadores(self, x,y, filas, columnas):
+    def cambiarIndicadoresRescate(self, x,y, filas, columnas):
         actual = self.cabeza
         for i in range((int(filas))):
             for j in range(int(columnas)):
@@ -539,7 +539,7 @@ class listaCuadritos:
         for i in range((int(filas))):
             for j in range(int(columnas)):
                 if actual.Cuadrito.Tipo == "Recurso":
-                    print("  ",n,".","Unidad de Recursos","Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
+                    print("  ",n,".","Recurso","Fila:",actual.Cuadrito.x,"Columna:",actual.Cuadrito.y,".                     ")
                     n = n+1
                 if actual.siguiente !=None:
                     actual = actual.siguiente
@@ -549,7 +549,7 @@ class listaCuadritos:
         print("   0 . Volver .")
         return n
 
-    def mantenerMenuRecurso(self, filas, columnas):
+    def mantenerMenuRecursos(self, filas, columnas):
         correcto = False
         if self.cabeza == None:
             print("No hay ciudades para mostrar")
@@ -568,18 +568,20 @@ class listaCuadritos:
                         w = str(self.listaRobs.mantenerRobotoElegidoPelea())
                         lol = False
                         while (not lol):
-                            print("¿Ha elegido salvar el Recurso localizado en: Fila:"+x+" - columna:"+y+" con el dron de Pelea:"+w+"?")
+                            print("¿Ha elegido salvar el recurso localizado en: Fila:"+x+" - columna:"+y+" con el dron de pelea:"+w+"?")
                             print("Si = 1")
                             print("No = 2")
                             select = int(input("selecciona alguna opción:"))
                             if select == 1:
+                                self.caminoRecurso(filas, columnas,x,y)
                                 print("Vamo a darle")
                                 lol = True
+                                return (x,y,w)
                             elif select == 2:
                                 lol = True
                                 print("No")
                                 print("Volviendo....")
-                                break
+                                return False
                             elif select != 1 and select !=2:
                                 print("esa opcion no existe")
                         break
@@ -638,6 +640,79 @@ class listaCuadritos:
                 actual = actual.anterior
             actual = actual.abajo
 
+    def caminoRecurso(self,filas, columnas, x ,y):
+        self.cambiarIndicadoresRecurso(x,y,filas, columnas)
+        xEntrada = self.buscarEntradaX(filas, columnas)
+        yEntrada = self.buscarEntradaY(filas, columnas)
+        actual = self.cabeza
+        for i in range(1, int(yEntrada)):
+            actual = actual.siguiente
+        for j in range(1, int(xEntrada)):
+            actual = actual.abajo
+        actual.Cuadrito.setIndicador(1)
+        ####################################
+        actual.Cuadrito.x = int(actual.Cuadrito.x)
+        actual.Cuadrito.y = int(actual.Cuadrito.y)
+        x = int(x)
+        y = int(y)
+        
+        if actual.Cuadrito.x < x:
+            if actual.Cuadrito.y < y:
+                a = self.recorridoCuatro(xEntrada,yEntrada, filas, columnas)
+                print(a)
+            elif actual.Cuadrito.y > y:
+                a = self.recorridoTres(xEntrada,yEntrada, filas, columnas)
+                print(a)
+            elif actual.Cuadrito.y == y:
+                identificador = "-y"
+        elif actual.Cuadrito.x >x:
+            if actual.Cuadrito.y < y:
+                a = self.recorridoUno(xEntrada,yEntrada, filas, columnas)
+                print(a)
+            elif actual.Cuadrito.y > y:
+                a = self.recorridoUno(xEntrada,yEntrada, filas, columnas)
+                print(a)
+            elif actual.Cuadrito.y == y:
+                a = self.recorridoUno(xEntrada,yEntrada, filas, columnas)
+                print(a)
+        elif actual.Cuadrito.x == x:
+            if actual.Cuadrito.y < y:
+                a = self.recorridoUno(xEntrada,yEntrada, filas, columnas)
+                print(a)
+            elif actual.Cuadrito.y > y:
+                a = self.recorridoDos(xEntrada,yEntrada, filas, columnas)
+                print(a)
+
+
+
+        actual= self.cabeza
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if int(actual.Cuadrito.x) == int(x) and int(actual.Cuadrito.y) == int(y):
+                    actual.Cuadrito.setIndicador(0)
+                if int(actual.Cuadrito.x) == int(xEntrada) and int(actual.Cuadrito.y) == int(yEntrada):
+                    actual.Cuadrito.setIndicador(0)
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
+
+    def cambiarIndicadoresRecurso(self, x,y, filas, columnas):
+        actual = self.cabeza
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                if actual.Cuadrito.Tipo == "Camino":
+                    actual.Cuadrito.setIndicador(1)
+                if int(actual.Cuadrito.x) == int(x) and int(actual.Cuadrito.y) == int(y):
+                    actual.Cuadrito.setIndicador(3)
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
+
+############################
     def buscarEntradaX(self, filas, columnas):
         actual = self.cabeza
         for i in range((int(filas))):
@@ -661,3 +736,14 @@ class listaCuadritos:
                 while actual.anterior:
                     actual = actual.anterior
                 actual = actual.abajo
+
+    def restablecerIndicador(self, filas, columnas):
+        actual = self.cabeza
+        for i in range((int(filas))):
+            for j in range(int(columnas)):
+                actual.Cuadrito.setIndicador(0)
+                if actual.siguiente !=None:
+                    actual = actual.siguiente
+            while actual.anterior:
+                actual = actual.anterior
+            actual = actual.abajo
