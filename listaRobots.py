@@ -23,7 +23,6 @@ class listaRobots:
         actual = self.cabeza
         while actual != None:
             if actual and actual.robot.nombre == name:
-                print(actual.robot.nombre)
                 return actual.robot.nombre
             actual = actual.siguiente
 
