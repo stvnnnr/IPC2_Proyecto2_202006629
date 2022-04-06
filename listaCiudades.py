@@ -118,6 +118,7 @@ class listaCiudades:
                 y = str(datos[1])
                 z= str(datos[2])
                 self.graficarRescate(nombre,filas,columnas,x,y,z)
+                listaP.restablecerIndicador(filas, columnas)
             actual = actual.siguiente
 
 
@@ -133,6 +134,7 @@ class listaCiudades:
                 y = str(datos[1])
                 z= str(datos[2])
                 self.graficarRecurso(nombre,filas,columnas,x,y,z)
+                listaP.restablecerIndicador(filas, columnas)
             actual = actual.siguiente
 
 
