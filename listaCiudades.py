@@ -87,7 +87,7 @@ class listaCiudades:
 
     def mantenerCiudadElegida(self, nombre):
         while (True):
-            # try:
+            try:
                 self.menuCiudadElegida(nombre)
                 select = int(input("Selecciona alguna opción:"))
                 print("\n")
@@ -101,9 +101,9 @@ class listaCiudades:
                     break
                 else:
                     print("No existe esa opción")
-            # except:
-            #     print("ocurrio un error, vuelve a intentarlo")
-            #     print("El error fue:", sys.exc_info()[0])
+            except:
+                print("ocurrio un error, vuelve a intentarlo")
+                print("El error fue:", sys.exc_info()[0])
 
     def buscarRescates(self, nombre):
         actual =  self.cabeza
@@ -165,15 +165,15 @@ class listaCiudades:
                     cabezaDos = '''struct4 [label=<
                                     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="15" CELLPADDING="10">
                                     <TR>
-                                    <TD BGCOLOR="#6B238E" COLSPAN="20">'''
+                                    <TD BGCOLOR="#D7BDE2" COLSPAN="20">'''
                     Archivo.write(cabezaDos)
                     nombre = (str(nombre)+"\n </TD></TR>")
                     Archivo.write(nombre)
-                    misio = ("<TR> <TD BGCOLOR=\"#9932CD\" COLSPAN=\"20\"> Tipo de mision: Rescate"+"\n </TD> </TR>")
+                    misio = ("<TR> <TD BGCOLOR=\"#C39BD3\" COLSPAN=\"20\"> Tipo de mision: Rescate"+"\n </TD> </TR>")
                     Archivo.write(misio)
-                    ubicacion = ("<TR> <TD BGCOLOR=\"#9F5F9F\" COLSPAN=\"20\"> Unidad Civil en:"+x+","+y+"\n </TD> </TR>")
+                    ubicacion = ("<TR> <TD BGCOLOR=\"#AF7AC5\" COLSPAN=\"20\"> Unidad Civil en:"+x+","+y+"\n </TD> </TR>")
                     Archivo.write(ubicacion)
-                    bot = ("<TR> <TD BGCOLOR=\"#FF00FF\" COLSPAN=\"20\"> Salvada por el dron:"+nombreBot+" </TD> </TR>")
+                    bot = ("<TR> <TD BGCOLOR=\"#9B59B6\" COLSPAN=\"20\"> Salvada por el dron:"+nombreBot+" </TD> </TR>")
                     Archivo.write(bot)
                     ############aca irian los otros datos
                     finDotDos = '''</TABLE>>];}'''
